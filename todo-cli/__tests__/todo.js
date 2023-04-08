@@ -20,5 +20,6 @@ describe("TodoList Test Suite", () => {
   test("Should mark a todo as complete", () => {
     expect(all[0].completed).toBe(false);
     markAsComplete(0);
+    expect(all()[0].completed).toBe(true);
   });
 });
