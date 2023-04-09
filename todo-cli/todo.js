@@ -1,83 +1,38 @@
-const todoList = () => {
-  all = [];
-  const add = (todoItem) => {
-    all.push(todoItem);
+module.exports = () => {
+  const todos = [];
+
+  const add = (todo) => {
+    todos.push(todo);
   };
+
   const markAsComplete = (index) => {
-    all[index].completed = true;
+    todos[index].completed = true;
   };
 
-  const overdue = () => {
-    const today = new Date();
-    const overdueItems = [];
-
-    for (let i = 0; i < all.length; i++) {
-      if (all[i].dueDate < today.toISOString().split("T")[0]) {
-        overdueItems.push(all[i]);
-      }
-    }
-
-    return overdueItems;
+  const all = () => {
+    return todos;
   };
 
-  const dueToday = () => {
-    const dueTodayItems = [];
-    const today = new Date();
-
-    for (let i = 0; i < all.length; i++) {
-      if (all[i].dueDate === today.toISOString().split("T")[0]) {
-        dueTodayItems.push(all[i]);
-      }
-    }
-
-    return dueTodayItems;
+  const getOverdueItems = () => {
+    return todos.filter((todo) => new Date(todo.dueDate) < new Date());
   };
 
-  const dueLater = () => {
-    const dueLaterItems = [];
-    const today = new Date();
-
-    for (let i = 0; i < all.length; i++) {
-      if (all[i].dueDate > today.toISOString().split("T")[0]) {
-        dueLaterItems.push(all[i]);
-      }
-    }
-
-    return dueLaterItems;
+  const getDueTodayItems = () => {
+    const today = new Date().toLocaleDateString("en-CA");
+    return todos.filter((todo) => todo.dueDate === today);
   };
 
-  const toDisplayableList = (list) => {
-    let displayableList = "";
-
-    list.forEach((item) => {
-      const isCompleted = item.completed ? "[x]" : "[ ]";
-      let dateDue = "";
-      if (item.dueDate !== undefined && item.dueDate !== null) {
-        if (item.dueDate === new Date().toISOString().split("T")[0]) {
-          dateDue = "";
-        } else {
-          dateDue = `${item.dueDate}`;
-        }
-      }
-
-      if (item === list[list.length - 1]) {
-        displayableList += `${isCompleted} ${item.title} ${dateDue}`;
-      } else {
-        displayableList += `${isCompleted} ${item.title} ${dateDue}\n`;
-      }
-    });
-
-    return displayableList;
+  const getDueLaterItems = () => {
+    const today = new Date().toLocaleDateString("en-CA");
+    return todos.filter((todo) => todo.dueDate > today);
   };
 
   return {
-    all,
     add,
     markAsComplete,
-    overdue,
-    dueToday,
-    dueLater,
-    toDisplayableList,
+    all,
+    getOverdueItems,
+    getDueTodayItems,
+    getDueLaterItems,
   };
 };
-module.exports = todoList;
