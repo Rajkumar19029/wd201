@@ -27,6 +27,19 @@ module.exports = () => {
     return todos.filter((todo) => todo.dueDate > today);
   };
 
+  const toDisplayableList = () => {
+    return todos
+      .map((todo) => {
+        const completionStatus = todo.completed ? "[x]" : "[ ]";
+        const displayedDate =
+          todo.dueDate === new Date().toISOString().slice(0, 10)
+            ? ""
+            : todo.dueDate;
+        return `${completionStatus} ${todo.title.trim()} ${displayedDate.trim()}`;
+      })
+      .join("\n");
+  };
+
   return {
     add,
     markAsComplete,
@@ -34,5 +47,6 @@ module.exports = () => {
     getOverdueItems,
     getDueTodayItems,
     getDueLaterItems,
+    toDisplayableList,
   };
 };
