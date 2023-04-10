@@ -44,7 +44,13 @@ describe("TodoList Test Suite", () => {
   });
 
   test("Should retrieve items due later", () => {
+    const initialCount = getDueLaterItems().length;
+    add({
+      title: "Test todo due later",
+      completed: false,
+      dueDate: new Date(Date.now() + 86400000).toLocaleDateString("en-CA"),
+    });
     const dueLaterItems = getDueLaterItems();
-    expect(dueLaterItems.length).toBe(0);
+    expect(dueLaterItems.length).toBe(initialCount + 1);
   });
 });
