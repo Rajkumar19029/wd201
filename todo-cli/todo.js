@@ -13,17 +13,17 @@ module.exports = () => {
     return todos;
   };
 
+  const today = new Date().toLocaleDateString("en-CA");
+
   const getOverdueItems = () => {
-    return todos.filter((todo) => new Date(todo.dueDate) < new Date());
+    return todos.filter((todo) => new Date(todo.dueDate) < new Date(today));
   };
 
   const getDueTodayItems = () => {
-    const today = new Date().toLocaleDateString("en-CA");
     return todos.filter((todo) => todo.dueDate === today);
   };
 
   const getDueLaterItems = () => {
-    const today = new Date().toLocaleDateString("en-CA");
     return todos.filter((todo) => todo.dueDate > today);
   };
 
